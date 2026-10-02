@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Visa Breno" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="visa-breno" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.visabreno.VisaBrenoApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
