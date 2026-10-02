@@ -1,5 +1,7 @@
 package com.example.visabreno.account;
 
+import com.example.visabreno.account.AccountDTO.AccountResponse;
+import com.example.visabreno.account.AccountDTO.CreateAccountRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +19,4 @@ public class AccountController {
         return s.createAccount(request.documentNumber());
     }
 
-    public record CreateAccountRequest(String documentNumber) {
-    }
-
-    public record AccountResponse(int id, String document) {
-    }
 }
