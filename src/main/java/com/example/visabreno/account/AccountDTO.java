@@ -12,6 +12,9 @@ public final class AccountDTO {
     ) {
     }
 
-    public record AccountResponse(long id, String document) {
+    public record AccountResponse(
+            @JsonProperty("account_id") long id,
+            @JsonProperty("document_number") String document
+    ) {
     }
 }
