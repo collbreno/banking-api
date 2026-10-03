@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: visa-breno-postgres
+    environment:
+      POSTGRES_DB: visa_breno
+      POSTGRES_USER: breno
+      POSTGRES_PASSWORD: visa_breno_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U breno -d visa_breno" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
