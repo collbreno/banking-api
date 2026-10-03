@@ -26,4 +26,15 @@ public class AccountRepository {
 
         return accounts.stream().findFirst();
     }
+
+    public Account insert(String document) {
+        return jdbcTemplate.queryForObject(
+                "INSERT INTO accounts (document) VALUES (?) RETURNING id, document",
+                (resultSet, rowNumber) -> new Account(
+                        resultSet.getLong("id"),
+                        resultSet.getString("document")
+                ),
+                document
+        );
+    }
 }

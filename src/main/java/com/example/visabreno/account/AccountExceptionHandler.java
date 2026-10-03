@@ -24,4 +24,12 @@ public class AccountExceptionHandler {
         return problem;
     }
 
+    @ExceptionHandler(AccountAlreadyExistsException.class)
+    public ProblemDetail handleAccountAlreadyExists(AccountAlreadyExistsException exception) {
+        var problem = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problem.setTitle("Conflict");
+        problem.setDetail(exception.getMessage());
+        return problem;
+    }
+
 }
