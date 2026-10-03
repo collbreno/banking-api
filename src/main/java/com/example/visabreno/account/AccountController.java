@@ -2,6 +2,7 @@ package com.example.visabreno.account;
 
 import com.example.visabreno.account.AccountDTO.AccountResponse;
 import com.example.visabreno.account.AccountDTO.CreateAccountRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class AccountController {
     }
 
     @PostMapping("/accounts")
+    @ResponseStatus(HttpStatus.CREATED)
     public AccountResponse createAccount(@RequestBody CreateAccountRequest request) {
         return service.createAccount(request.documentNumber());
     }
