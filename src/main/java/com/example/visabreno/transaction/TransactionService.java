@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 @Service
 public class TransactionService {
@@ -34,7 +35,16 @@ public class TransactionService {
                     request.amount().multiply(new BigDecimal(operationType.getSign()))
             );
         } catch (DataIntegrityViolationException exception) {
-            throw new AccountNotFoundException();
+            var cause = exception.getMostSpecificCause();
+            if (cause instanceof SQLException sqlException) {
+                var state = sqlException.getSQLState();
+                if (state.equals("23514")) {
+                    throw new InvalidOperationTypeException(operationType.getCode());
+                } else if (state.equals("23503")) {
+                    throw new AccountNotFoundException();
+                }
+            }
+            throw exception;
         }
 
         return new TransactionDTO.PostTransactionResponse(id);
