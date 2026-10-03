@@ -12,6 +12,6 @@ public final class AccountDTO {
     ) {
     }
 
-    public record AccountResponse(int id, String document) {
+    public record AccountResponse(long id, String document) {
     }
 }

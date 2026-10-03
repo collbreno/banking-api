@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AccountController {
 
+    private final AccountService service;
+
+    public AccountController(AccountService service) {
+        this.service = service;
+    }
+
     @GetMapping("/accounts/{id}")
-    public AccountResponse getAccount(@PathVariable int id) {
-        var s = new AccountService();
-        return s.getAccount(id);
+    public AccountResponse getAccount(@PathVariable long id) {
+        return service.getAccount(id);
     }
 
     @PostMapping("/accounts")
     public AccountResponse createAccount(@RequestBody CreateAccountRequest request) {
-        var s = new AccountService();
-        return s.createAccount(request.documentNumber());
+        return service.createAccount(request.documentNumber());
     }
 
 }

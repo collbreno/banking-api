@@ -1,11 +1,21 @@
 package com.example.visabreno.account;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class AccountService {
-    public AccountDTO.AccountResponse getAccount(int id) {
-        if (id > 10) {
-            throw new AccountNotFoundException(id);
-        }
-        return new AccountDTO.AccountResponse(id, "111");
+
+    private final AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public AccountDTO.AccountResponse getAccount(long id) {
+        var account = accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
+
+        return new AccountDTO.AccountResponse(account.id(), account.document());
     }
 
     public AccountDTO.AccountResponse createAccount(String document) {
