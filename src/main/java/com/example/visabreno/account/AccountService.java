@@ -15,7 +15,7 @@ public class AccountService {
 
     public AccountDTO.AccountResponse getAccount(long id) {
         var account = repository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
+                .orElseThrow(AccountNotFoundException::new);
 
         return new AccountDTO.AccountResponse(account.id(), account.document());
     }

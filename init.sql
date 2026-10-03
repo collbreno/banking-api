@@ -2,7 +2,8 @@ BEGIN;
 
 CREATE TABLE accounts (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    document VARCHAR(11) NOT NULL UNIQUE
+    document VARCHAR(11) NOT NULL UNIQUE,
+    CONSTRAINT chk_accounts_document_length CHECK (char_length(document) = 11)
 );
 
 CREATE TABLE transactions (
