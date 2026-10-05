@@ -1,7 +1,5 @@
 package com.example.visabreno.account;
 
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,24 +11,14 @@ public class AccountService {
         this.repository = repository;
     }
 
-    public AccountDTO.AccountResponse getAccount(long id) {
-        var account = repository.findById(id)
-                .orElseThrow(AccountNotFoundException::new);
-
-        return new AccountDTO.AccountResponse(account.id(), account.document());
+    public Account getAccount(long id) {
+        return repository.getById(id);
     }
 
-    public AccountDTO.AccountResponse createAccount(String document) {
-        Account account;
-
-        try {
-            account = repository.insert(document);
-        } catch (DuplicateKeyException exception) {
-            throw new AccountAlreadyExistsException();
-        } catch (DataIntegrityViolationException exception) {
+    public long createAccount(String document) {
+        if (document.length() != 11) {
             throw new InvalidDocumentException();
         }
-
-        return new AccountDTO.AccountResponse(account.id(), account.document());
+        return repository.create(document);
     }
 }

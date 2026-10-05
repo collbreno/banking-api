@@ -1,40 +1,7 @@
 package com.example.visabreno.account;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+public interface AccountRepository {
+    Account getById(long id);
 
-import java.util.Optional;
-
-@Repository
-public class AccountRepository {
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public AccountRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public Optional<Account> findById(long id) {
-        var accounts = jdbcTemplate.query(
-                "SELECT id, document FROM accounts WHERE id = ?",
-                (resultSet, rowNumber) -> new Account(
-                        resultSet.getLong("id"),
-                        resultSet.getString("document")
-                ),
-                id
-        );
-
-        return accounts.stream().findFirst();
-    }
-
-    public Account insert(String document) {
-        return jdbcTemplate.queryForObject(
-                "INSERT INTO accounts (document) VALUES (?) RETURNING id, document",
-                (resultSet, rowNumber) -> new Account(
-                        resultSet.getLong("id"),
-                        resultSet.getString("document")
-                ),
-                document
-        );
-    }
+    long create(String documentNumber);
 }

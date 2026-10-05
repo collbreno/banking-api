@@ -2,6 +2,7 @@ package com.example.visabreno.account;
 
 import com.example.visabreno.account.AccountDTO.AccountResponse;
 import com.example.visabreno.account.AccountDTO.CreateAccountRequest;
+import com.example.visabreno.account.AccountDTO.CreateAccountResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,15 @@ public class AccountController {
 
     @GetMapping("/accounts/{id}")
     public AccountResponse getAccount(@PathVariable long id) {
-        return service.getAccount(id);
+        var account = service.getAccount(id);
+        return new AccountResponse(account.id(), account.document());
     }
 
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountResponse createAccount(@RequestBody CreateAccountRequest request) {
-        return service.createAccount(request.documentNumber());
+    public CreateAccountResponse createAccount(@RequestBody CreateAccountRequest request) {
+        var id = service.createAccount(request.documentNumber());
+        return new CreateAccountResponse(id);
     }
 
 }
