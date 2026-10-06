@@ -1,5 +1,6 @@
 package com.example.visabreno;
 
+import com.example.visabreno.adapter.http.HealthcheckController;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

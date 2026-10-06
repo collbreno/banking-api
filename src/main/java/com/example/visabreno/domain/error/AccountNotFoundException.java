@@ -1,4 +1,4 @@
-package com.example.visabreno.account;
+package com.example.visabreno.domain.error;
 
 public class AccountNotFoundException extends RuntimeException {
 

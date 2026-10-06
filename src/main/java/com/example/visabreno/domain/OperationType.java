@@ -1,4 +1,6 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.domain;
+
+import com.example.visabreno.domain.error.InvalidOperationTypeException;
 
 public enum OperationType {
     NORMAL_PURCHASE(1, -1),

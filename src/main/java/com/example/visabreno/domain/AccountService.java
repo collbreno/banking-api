@@ -1,8 +1,7 @@
-package com.example.visabreno.account;
+package com.example.visabreno.domain;
 
-import org.springframework.stereotype.Service;
+import com.example.visabreno.domain.error.InvalidDocumentException;
 
-@Service
 public class AccountService {
 
     private final AccountRepository repository;

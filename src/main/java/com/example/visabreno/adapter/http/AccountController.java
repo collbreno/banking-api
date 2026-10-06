@@ -1,8 +1,9 @@
-package com.example.visabreno.account;
+package com.example.visabreno.adapter.http;
 
-import com.example.visabreno.account.AccountDTO.AccountResponse;
-import com.example.visabreno.account.AccountDTO.CreateAccountRequest;
-import com.example.visabreno.account.AccountDTO.CreateAccountResponse;
+import com.example.visabreno.adapter.http.AccountDTO.AccountResponse;
+import com.example.visabreno.adapter.http.AccountDTO.CreateAccountRequest;
+import com.example.visabreno.adapter.http.AccountDTO.CreateAccountResponse;
+import com.example.visabreno.domain.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

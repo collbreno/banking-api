@@ -1,6 +1,9 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.adapter.postgres;
 
-import com.example.visabreno.account.AccountNotFoundException;
+import com.example.visabreno.domain.OperationType;
+import com.example.visabreno.domain.TransactionRepository;
+import com.example.visabreno.domain.error.AccountNotFoundException;
+import com.example.visabreno.domain.error.InvalidOperationTypeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,11 +13,11 @@ import java.sql.SQLException;
 import java.time.OffsetDateTime;
 
 @Repository
-public class TransactionRepositoryImpl implements TransactionRepository {
+public class JdbcTransactionRepository implements TransactionRepository {
 
     private final JdbcTemplate template;
 
-    public TransactionRepositoryImpl(JdbcTemplate template) {
+    public JdbcTransactionRepository(JdbcTemplate template) {
         this.template = template;
     }
 

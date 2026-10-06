@@ -1,4 +1,4 @@
-package com.example.visabreno.account;
+package com.example.visabreno.domain;
 
 public interface AccountRepository {
     Account getById(long id);

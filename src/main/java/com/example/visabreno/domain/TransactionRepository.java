@@ -1,4 +1,4 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.domain;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

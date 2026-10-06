@@ -1,4 +1,4 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.adapter.http;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,16 +1,21 @@
-package com.example.visabreno.account;
+package com.example.visabreno.adapter.postgres;
 
+import com.example.visabreno.domain.Account;
+import com.example.visabreno.domain.AccountRepository;
+import com.example.visabreno.domain.error.AccountAlreadyExistsException;
+import com.example.visabreno.domain.error.AccountNotFoundException;
+import com.example.visabreno.domain.error.InvalidDocumentException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccountRepositoryImpl implements AccountRepository {
+public class JdbcAccountRepository implements AccountRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AccountRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public JdbcAccountRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

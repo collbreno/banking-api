@@ -1,17 +1,19 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.domain;
 
-import org.springframework.stereotype.Service;
+import com.example.visabreno.domain.error.InvalidAmountException;
 
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.OffsetDateTime;
 
-@Service
 public class TransactionService {
 
     private final TransactionRepository repository;
+    private final Clock clock;
 
-    public TransactionService(TransactionRepository repository) {
+    public TransactionService(TransactionRepository repository, Clock clock) {
         this.repository = repository;
+        this.clock = clock;
     }
 
     public Transaction createTransaction(long accountId, OperationType operationType, BigDecimal amount) {
@@ -24,7 +26,7 @@ public class TransactionService {
         }
 
         var signedAmount = amount.multiply(new BigDecimal(operationType.sign()));
-        var now = OffsetDateTime.now();
+        var now = OffsetDateTime.now(clock);
 
         var createdId = repository.create(
                 accountId,

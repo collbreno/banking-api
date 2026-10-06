@@ -1,12 +1,29 @@
-package com.example.visabreno.account;
+package com.example.visabreno.adapter.http;
 
+import com.example.visabreno.domain.error.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class AccountExceptionHandler {
+public class ApiExceptionHandler {
+
+    @ExceptionHandler(InvalidOperationTypeException.class)
+    public ProblemDetail handleInvalidOperationType(InvalidOperationTypeException exception) {
+        var problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problem.setTitle("Bad request");
+        problem.setDetail(exception.getMessage());
+        return problem;
+    }
+
+    @ExceptionHandler(InvalidAmountException.class)
+    public ProblemDetail handleInvalidOperationType(InvalidAmountException exception) {
+        var problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problem.setTitle("Bad request");
+        problem.setDetail(exception.getMessage());
+        return problem;
+    }
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ProblemDetail handleAccountNotFound(AccountNotFoundException exception) {
@@ -31,5 +48,4 @@ public class AccountExceptionHandler {
         problem.setDetail(exception.getMessage());
         return problem;
     }
-
 }

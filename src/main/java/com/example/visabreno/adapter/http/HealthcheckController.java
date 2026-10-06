@@ -1,4 +1,4 @@
-package com.example.visabreno;
+package com.example.visabreno.adapter.http;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

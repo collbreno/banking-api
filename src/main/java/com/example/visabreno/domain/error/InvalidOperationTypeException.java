@@ -1,4 +1,4 @@
-package com.example.visabreno.transaction;
+package com.example.visabreno.domain.error;
 
 public class InvalidOperationTypeException extends RuntimeException {
 
