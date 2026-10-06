@@ -1,6 +1,7 @@
 package com.example.visabreno.adapter.http;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 
 public final class AccountDTO {
 
@@ -8,6 +9,7 @@ public final class AccountDTO {
     }
 
     public record CreateAccountRequest(
+            @NotNull
             @JsonProperty("document_number") String documentNumber
     ) {
     }
