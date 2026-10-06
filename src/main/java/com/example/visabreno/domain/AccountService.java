@@ -15,7 +15,7 @@ public class AccountService {
     }
 
     public Account createAccount(String document) {
-        if (document.length() != 11) {
+        if (document == null || document.length() != 11) {
             throw new InvalidDocumentException();
         }
         var createdId = repository.create(document);
