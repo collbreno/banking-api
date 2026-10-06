@@ -20,6 +20,11 @@ public class TransactionController {
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.CREATED)
     public PostTransactionResponse postTransaction(@RequestBody PostTransactionRequest request) {
-        return service.createTransaction(request);
+        var id = service.createTransaction(
+                request.accountId(),
+                OperationType.fromCode(request.operationTypeId()),
+                request.amount()
+        );
+        return new PostTransactionResponse(id);
     }
 }
