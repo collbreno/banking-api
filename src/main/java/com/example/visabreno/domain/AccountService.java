@@ -14,10 +14,11 @@ public class AccountService {
         return repository.getById(id);
     }
 
-    public long createAccount(String document) {
+    public Account createAccount(String document) {
         if (document.length() != 11) {
             throw new InvalidDocumentException();
         }
-        return repository.create(document);
+        var createdId = repository.create(document);
+        return new Account(createdId, document);
     }
 }

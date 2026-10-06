@@ -14,11 +14,6 @@ public final class AccountDTO {
     ) {
     }
 
-    public record CreateAccountResponse(
-            @JsonProperty("account_id") long id
-    ) {
-    }
-
     public record AccountResponse(
             @JsonProperty("account_id") long id,
             @JsonProperty("document_number") String document

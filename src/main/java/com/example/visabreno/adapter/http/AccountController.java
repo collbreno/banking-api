@@ -2,7 +2,6 @@ package com.example.visabreno.adapter.http;
 
 import com.example.visabreno.adapter.http.AccountDTO.AccountResponse;
 import com.example.visabreno.adapter.http.AccountDTO.CreateAccountRequest;
-import com.example.visabreno.adapter.http.AccountDTO.CreateAccountResponse;
 import com.example.visabreno.domain.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,9 @@ public class AccountController {
 
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateAccountResponse createAccount(@Valid @RequestBody CreateAccountRequest request) {
-        var id = service.createAccount(request.documentNumber());
-        return new CreateAccountResponse(id);
+    public AccountResponse createAccount(@Valid @RequestBody CreateAccountRequest request) {
+        var account = service.createAccount(request.documentNumber());
+        return new AccountResponse(account.id(), account.document());
     }
 
 }

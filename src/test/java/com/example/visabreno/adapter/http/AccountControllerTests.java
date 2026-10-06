@@ -1,16 +1,18 @@
 package com.example.visabreno.adapter.http;
 
+import com.example.visabreno.domain.Account;
 import com.example.visabreno.domain.AccountService;
 import com.example.visabreno.domain.error.AccountAlreadyExistsException;
 import com.example.visabreno.domain.error.InvalidDocumentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.json.JsonCompareMode;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -29,7 +31,7 @@ class AccountControllerTests {
 
     @Test
     void createsAccountUsingDocumentNumberFromJson() throws Exception {
-        when(service.createAccount("12345678900")).thenReturn(42L);
+        when(service.createAccount("12345678900")).thenReturn(new Account(42L, "12345678900"));
 
         mockMvc.perform(post("/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -37,7 +39,12 @@ class AccountControllerTests {
                                 {"document_number":"12345678900"}
                                 """))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.account_id").value(42));
+                .andExpect(content().json("""
+                        {
+                          "account_id": 42,
+                          "document_number": "12345678900"
+                        }
+                        """, JsonCompareMode.STRICT));
 
         verify(service).createAccount("12345678900");
     }
@@ -63,8 +70,12 @@ class AccountControllerTests {
                                 {"document_number":"123"}
                                 """))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.title").value("Bad request"))
-                .andExpect(jsonPath("$.detail").value("Invalid document number"));
+                .andExpect(content().json("""
+                        {
+                          "title": "Bad request",
+                          "detail": "Invalid document number"
+                        }
+                        """, JsonCompareMode.LENIENT));
 
         verify(service).createAccount("123");
     }
@@ -80,8 +91,12 @@ class AccountControllerTests {
                                 {"document_number":"12345678900"}
                                 """))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.title").value("Conflict"))
-                .andExpect(jsonPath("$.detail").value("An account with this document already exists"));
+                .andExpect(content().json("""
+                        {
+                          "title": "Conflict",
+                          "detail": "An account with this document already exists"
+                        }
+                        """, JsonCompareMode.LENIENT));
 
         verify(service).createAccount("12345678900");
     }
