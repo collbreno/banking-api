@@ -1,6 +1,7 @@
 package com.example.visabreno.adapter.http;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -10,9 +11,9 @@ public final class TransactionDTO {
     }
 
     public record PostTransactionRequest(
-            @JsonProperty("account_id") long accountId,
-            @JsonProperty("operation_type_id") int operationTypeId,
-            BigDecimal amount
+            @NotNull @JsonProperty("account_id") Long accountId,
+            @NotNull @JsonProperty("operation_type_id") Integer operationTypeId,
+            @NotNull BigDecimal amount
     ) {
     }
 

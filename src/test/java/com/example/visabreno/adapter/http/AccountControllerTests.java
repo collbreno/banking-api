@@ -145,7 +145,7 @@ class AccountControllerTests {
     }
 
     @Nested
-    class GetAccountById {
+    class GetAccount {
 
         @Test
         void returnsAccountFromService() throws Exception {
@@ -177,6 +177,14 @@ class AccountControllerTests {
                             """, JsonCompareMode.LENIENT));
 
             verify(service).getAccount(42L);
+        }
+
+        @Test
+        void rejectsWhenAccountIdIsNaN() throws Exception {
+            mockMvc.perform(get("/accounts/pato"))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
         }
     }
 }

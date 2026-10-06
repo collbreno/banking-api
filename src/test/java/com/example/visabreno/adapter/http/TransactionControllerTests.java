@@ -147,5 +147,76 @@ class TransactionControllerTests {
 
             verify(service).createTransaction(42L, OperationType.NORMAL_PURCHASE, amount);
         }
+
+        @Test
+        void rejectsMalformedJsonWithoutCallingService() throws Exception {
+            mockMvc.perform(post("/transactions")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("{\"account_id\":42,\"operation_type_id\":1,\"amount\":123.45"))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsRequestWhenAmountIsOmitted() throws Exception {
+            mockMvc.perform(post("/transactions")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                      "account_id": 42,
+                                      "operation_type_id": 1
+                                    }
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsRequestWhenAmountIsNull() throws Exception {
+            mockMvc.perform(post("/transactions")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                      "account_id": 42,
+                                      "operation_type_id": 1,
+                                      "amount": null
+                                    }
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsRequestWhenAccountIdIsOmitted() throws Exception {
+            mockMvc.perform(post("/transactions")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                      "operation_type_id": 1,
+                                      "amount": 123.45
+                                    }
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsRequestWhenOperationTypeIdIsOmitted() throws Exception {
+            mockMvc.perform(post("/transactions")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                      "account_id": 42,
+                                      "amount": 123.45
+                                    }
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
     }
 }
