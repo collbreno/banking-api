@@ -66,6 +66,42 @@ class AccountControllerTests {
         }
 
         @Test
+        void rejectsRequestWhenDocumentNumberIsNull() throws Exception {
+            mockMvc.perform(post("/accounts")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {"document_number":null}
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsRequestWhenDocumentNumberIsEmpty() throws Exception {
+            mockMvc.perform(post("/accounts")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {"document_number":""}
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
+        void rejectsMalformedJsonWithoutCallingService() throws Exception {
+            mockMvc.perform(post("/accounts")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {"document_number":""
+                                    """))
+                    .andExpect(status().isBadRequest());
+
+            verifyNoInteractions(service);
+        }
+
+        @Test
         void returnsBadRequestWhenServiceRejectsDocumentNumber() throws Exception {
             when(service.createAccount("123"))
                     .thenThrow(new InvalidDocumentException());
