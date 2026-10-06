@@ -1,7 +1,7 @@
 package com.example.visabreno.transaction;
 
 import com.example.visabreno.transaction.TransactionDTO.PostTransactionRequest;
-import com.example.visabreno.transaction.TransactionDTO.PostTransactionResponse;
+import com.example.visabreno.transaction.TransactionDTO.TransactionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +19,18 @@ public class TransactionController {
 
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.CREATED)
-    public PostTransactionResponse postTransaction(@RequestBody PostTransactionRequest request) {
-        var id = service.createTransaction(
+    public TransactionResponse postTransaction(@RequestBody PostTransactionRequest request) {
+        var transaction = service.createTransaction(
                 request.accountId(),
                 OperationType.fromCode(request.operationTypeId()),
                 request.amount()
         );
-        return new PostTransactionResponse(id);
+        return new TransactionResponse(
+                transaction.id(),
+                transaction.accountId(),
+                transaction.operation().code(),
+                transaction.amount(),
+                transaction.occurredAt().toInstant()
+        );
     }
 }

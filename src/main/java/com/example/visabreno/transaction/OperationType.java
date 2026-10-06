@@ -14,11 +14,11 @@ public enum OperationType {
         this.sign = sign;
     }
 
-    public int getCode() {
+    public int code() {
         return code;
     }
 
-    public int getSign() {
+    public int sign() {
         return sign;
     }
 

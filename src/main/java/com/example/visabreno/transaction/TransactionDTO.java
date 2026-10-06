@@ -3,6 +3,7 @@ package com.example.visabreno.transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 public final class TransactionDTO {
     private TransactionDTO() {
@@ -15,8 +16,12 @@ public final class TransactionDTO {
     ) {
     }
 
-    public record PostTransactionResponse(
-            @JsonProperty("transaction_id") long id
+    public record TransactionResponse(
+            @JsonProperty("transaction_id") long id,
+            @JsonProperty("account_id") long accountId,
+            @JsonProperty("operation_type_id") int operationTypeId,
+            BigDecimal amount,
+            @JsonProperty("occurred_at") Instant occurredAt
     ) {
     }
 }

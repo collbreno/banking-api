@@ -9,7 +9,7 @@ CREATE TABLE accounts (
 CREATE TABLE transactions (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     operation_code SMALLINT NOT NULL,
-    occurred_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_time TIMESTAMPTZ NOT NULL,
     amount NUMERIC(19, 2) NOT NULL,
     account_id BIGINT NOT NULL
         REFERENCES accounts (id)

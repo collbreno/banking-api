@@ -3,6 +3,7 @@ package com.example.visabreno.transaction;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 @Service
 public class TransactionService {
@@ -13,7 +14,7 @@ public class TransactionService {
         this.repository = repository;
     }
 
-    public long createTransaction(long accountId, OperationType operationType, BigDecimal amount) {
+    public Transaction createTransaction(long accountId, OperationType operationType, BigDecimal amount) {
         if (amount.signum() <= 0) {
             throw new InvalidAmountException("Must be positive");
         }
@@ -22,10 +23,16 @@ public class TransactionService {
             throw new InvalidAmountException("Must have 2 decimal units");
         }
 
-        return repository.create(
+        var signedAmount = amount.multiply(new BigDecimal(operationType.sign()));
+        var now = OffsetDateTime.now();
+
+        var createdId = repository.create(
                 accountId,
                 operationType,
-                amount.multiply(new BigDecimal(operationType.getSign()))
+                signedAmount,
+                now
         );
+
+        return new Transaction(createdId, accountId, operationType, signedAmount, now);
     }
 }
