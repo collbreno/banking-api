@@ -1,5 +1,6 @@
 package com.example.visabreno.adapter.http;
 
+import com.example.visabreno.domain.Transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,5 +25,14 @@ public final class TransactionDTO {
             BigDecimal amount,
             @JsonProperty("occurred_at") Instant occurredAt
     ) {
+        public static TransactionResponse from(Transaction transaction) {
+            return new TransactionResponse(
+                    transaction.id(),
+                    transaction.accountId(),
+                    transaction.operation().code(),
+                    transaction.amount(),
+                    transaction.occurredAt().toInstant()
+            );
+        }
     }
 }

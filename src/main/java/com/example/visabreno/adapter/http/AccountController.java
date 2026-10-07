@@ -19,14 +19,14 @@ public class AccountController {
     @GetMapping("/accounts/{id}")
     public AccountResponse getAccount(@PathVariable long id) {
         var account = service.getAccount(id);
-        return new AccountResponse(account.id(), account.document());
+        return AccountResponse.from(account);
     }
 
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountResponse createAccount(@Valid @RequestBody CreateAccountRequest request) {
         var account = service.createAccount(request.documentNumber());
-        return new AccountResponse(account.id(), account.document());
+        return AccountResponse.from(account);
     }
 
 }

@@ -28,12 +28,6 @@ public class TransactionController {
                 OperationType.fromCode(request.operationTypeId()),
                 request.amount()
         );
-        return new TransactionResponse(
-                transaction.id(),
-                transaction.accountId(),
-                transaction.operation().code(),
-                transaction.amount(),
-                transaction.occurredAt().toInstant()
-        );
+        return TransactionResponse.from(transaction);
     }
 }
