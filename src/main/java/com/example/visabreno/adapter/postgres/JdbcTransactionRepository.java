@@ -32,9 +32,9 @@ public class JdbcTransactionRepository implements TransactionRepository {
             var cause = exception.getMostSpecificCause();
             if (cause instanceof SQLException sqlException) {
                 var state = sqlException.getSQLState();
-                if (state.equals("23514")) {
+                if (PostgresSqlState.CHECK_VIOLATION.equals(state)) {
                     throw new InvalidOperationTypeException(operationType.code());
-                } else if (state.equals("23503")) {
+                } else if (PostgresSqlState.FOREIGN_KEY_VIOLATION.equals(state)) {
                     throw new AccountNotFoundException();
                 }
             }
