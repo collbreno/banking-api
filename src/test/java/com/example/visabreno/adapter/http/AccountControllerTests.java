@@ -57,6 +57,7 @@ class AccountControllerTests {
 
         @Test
         void rejectsRequestWhenDocumentNumberIsOmitted() throws Exception {
+            // TODO: adicionar mensagem de erro
             mockMvc.perform(post("/accounts")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content("{}"))
@@ -151,7 +152,7 @@ class AccountControllerTests {
         void returnsAccountFromService() throws Exception {
             when(service.getAccount(42L)).thenReturn(new Account(42L, "12345678900"));
 
-            mockMvc.perform(get("/accounts/{id}", 42L))
+            mockMvc.perform(get("/accounts/42"))
                     .andExpect(status().isOk())
                     .andExpect(content().json("""
                             {
@@ -167,7 +168,7 @@ class AccountControllerTests {
         void returnsNotFoundWhenServiceCannotFindAccount() throws Exception {
             when(service.getAccount(42L)).thenThrow(new AccountNotFoundException());
 
-            mockMvc.perform(get("/accounts/{id}", 42L))
+            mockMvc.perform(get("/accounts/42"))
                     .andExpect(status().isNotFound())
                     .andExpect(content().json("""
                             {

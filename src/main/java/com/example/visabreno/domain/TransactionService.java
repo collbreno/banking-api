@@ -17,7 +17,7 @@ public class TransactionService {
     }
 
     public Transaction createTransaction(long accountId, OperationType operationType, BigDecimal amount) {
-        if (amount.signum() <= 0) {
+        if (amount == null || amount.signum() <= 0) {
             throw new InvalidAmountException("Must be positive");
         }
 
