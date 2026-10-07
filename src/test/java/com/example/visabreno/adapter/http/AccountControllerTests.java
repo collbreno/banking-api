@@ -7,6 +7,7 @@ import com.example.visabreno.domain.error.AccountNotFoundException;
 import com.example.visabreno.domain.error.InvalidDocumentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.json.JsonCompareMode;
@@ -19,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+@Tag("http-adapter")
 class AccountControllerTests {
 
     private AccountService service;
