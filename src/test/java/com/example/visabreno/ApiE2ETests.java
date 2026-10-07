@@ -9,10 +9,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
-import org.testcontainers.utility.MountableFile;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
@@ -20,25 +16,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Path;
 
+import static com.example.visabreno.support.TestPostgres.POSTGRES;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("e2e")
-@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ApiE2ETests {
-
-    @Container
-    private static final PostgreSQLContainer POSTGRES =
-            new PostgreSQLContainer("postgres:17-alpine")
-                    .withDatabaseName("visa_breno_test")
-                    .withUsername("test")
-                    .withPassword("test")
-                    .withCopyFileToContainer(
-                            MountableFile.forHostPath(Path.of("init.sql").toAbsolutePath()),
-                            "/docker-entrypoint-initdb.d/001-init.sql"
-                    );
 
     @DynamicPropertySource
     static void configureDataSource(DynamicPropertyRegistry registry) {

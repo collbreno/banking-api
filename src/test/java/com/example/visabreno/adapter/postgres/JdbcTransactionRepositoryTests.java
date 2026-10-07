@@ -8,34 +8,18 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
-import org.testcontainers.utility.MountableFile;
 
 import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+import static com.example.visabreno.support.TestPostgres.POSTGRES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@Testcontainers
 class JdbcTransactionRepositoryTests {
-
-    @Container
-    private static final PostgreSQLContainer POSTGRES =
-            new PostgreSQLContainer("postgres:17-alpine")
-                    .withDatabaseName("visa_breno_test")
-                    .withUsername("test")
-                    .withPassword("test")
-                    .withCopyFileToContainer(
-                            MountableFile.forHostPath(Path.of("init.sql").toAbsolutePath()),
-                            "/docker-entrypoint-initdb.d/001-init.sql"
-                    );
 
     private JdbcTemplate jdbcTemplate;
     private JdbcTransactionRepository repository;

@@ -11,30 +11,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
-import org.testcontainers.utility.MountableFile;
 
-import java.nio.file.Path;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static com.example.visabreno.support.TestPostgres.POSTGRES;
 
-@Testcontainers
 class JdbcAccountRepositoryTests {
-
-    @Container
-    private static final PostgreSQLContainer POSTGRES =
-            new PostgreSQLContainer("postgres:17-alpine")
-                    .withDatabaseName("visa_breno_test")
-                    .withUsername("test")
-                    .withPassword("test")
-                    .withCopyFileToContainer(
-                            MountableFile.forHostPath(Path.of("init.sql").toAbsolutePath()),
-                            "/docker-entrypoint-initdb.d/001-init.sql"
-                    );
 
     private JdbcTemplate jdbcTemplate;
     private JdbcAccountRepository repository;
