@@ -1,4 +1,4 @@
-# Visa Breno
+# Banking API
 
 A Spring Boot service for managing cardholder accounts and transactions. The
 application runs on Java 21 and uses PostgreSQL for persistence.
@@ -70,14 +70,14 @@ require Docker because they create PostgreSQL containers with Testcontainers.
 
 The suite is divided into six categories:
 
-| Tag | Purpose |
-|-----|---------|
-| `e2e` | Exercises complete user flows through a real HTTP server, application services, JDBC adapters, and a Testcontainers PostgreSQL database. It verifies that all layers work together from request to persisted data and response. |
-| `smoke` | Starts the Spring application context to confirm that configuration, dependency injection, and bean wiring are valid. It is a small startup check rather than a behavioral test. |
-| `domain` | Tests business rules in isolation, including document validation, operation types, transaction signs, amount validation, and timestamps. Repository ports are mocked, so Spring, HTTP, and PostgreSQL are not involved. |
-| `http-adapter` | Tests controllers with standalone MockMvc and mocked domain services. These tests verify JSON mapping, request validation, HTTP status codes, response bodies, and domain-error conversion without starting a real server. |
-| `database-adapter` | Tests JDBC repository implementations against a real Testcontainers PostgreSQL instance. These tests cover SQL mappings, generated IDs, database constraints, and translation of SQL failures into domain errors. |
-| `architecture` | Uses ArchUnit to enforce package and dependency boundaries, including keeping the domain independent from Spring and preventing adapters from violating the hexagonal dependency direction. |
+| Tag                | Purpose                                                                                                                                                                                                                         |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `e2e`              | Exercises complete user flows through a real HTTP server, application services, JDBC adapters, and a Testcontainers PostgreSQL database. It verifies that all layers work together from request to persisted data and response. |
+| `smoke`            | Starts the Spring application context to confirm that configuration, dependency injection, and bean wiring are valid. It is a small startup check rather than a behavioral test.                                                |
+| `domain`           | Tests business rules in isolation, including document validation, operation types, transaction signs, amount validation, and timestamps. Repository ports are mocked, so Spring, HTTP, and PostgreSQL are not involved.         |
+| `http-adapter`     | Tests controllers with standalone MockMvc and mocked domain services. These tests verify JSON mapping, request validation, HTTP status codes, response bodies, and domain-error conversion without starting a real server.      |
+| `database-adapter` | Tests JDBC repository implementations against a real Testcontainers PostgreSQL instance. These tests cover SQL mappings, generated IDs, database constraints, and translation of SQL failures into domain errors.               |
+| `architecture`     | Uses ArchUnit to enforce package and dependency boundaries, including keeping the domain independent from Spring and preventing adapters from violating the hexagonal dependency direction.                                     |
 
 Run any category by passing its tag:
 
