@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# ./run                — build and start the app + postgres via Docker Compose
+# ./run up [...]       — build and start the app + postgres via Docker Compose
+# ./run database [...] — start only postgres via Docker Compose
+# ./run down [...]     — stop and remove the Docker Compose containers
+# ./run test [...]     — run tests with minimal output
+# ./run test -v [...]  — run tests with verbose output
+
+set -euo pipefail
+
+cmd="${1:-up}"
+
+case "$cmd" in
+  up | "")
+    exec docker compose up --build "${@:2}"
+    ;;
+  database)
+    exec docker compose up postgres "${@:2}"
+    ;;
+  down)
+    exec docker compose down "${@:2}"
+    ;;
+  test)
+    if [[ "${2:-}" == "-v" ]]; then
+      exec ./mvnw test "${@:3}"
+    fi
+
+    exec ./mvnw test -Dmaven.test.redirectTestOutputToFile=true "${@:2}"
+    ;;
+  *)
+    echo "unknown command: $cmd" >&2
+    echo "available commands: up, database, down, test" >&2
+    exit 1
+    ;;
+esac
