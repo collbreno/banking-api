@@ -17,6 +17,7 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -100,11 +101,11 @@ class JdbcAccountRepositoryTests {
         @Test
         void returnsAccountById() {
             var document = "12345678900";
-            var accountId = jdbcTemplate.queryForObject(
+            long accountId = Objects.requireNonNull(jdbcTemplate.queryForObject(
                     "INSERT INTO accounts (document) VALUES (?) RETURNING id",
                     Long.class,
                     document
-            );
+            ));
 
             var account = repository.getById(accountId);
 
