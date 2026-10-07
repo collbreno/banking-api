@@ -1,0 +1,8 @@
+.git
+.idea
+.mvn
+target
+*.iml
+*.log
+checklist.html
+test-plan.html

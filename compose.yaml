@@ -18,5 +18,20 @@ services:
       retries: 10
     restart: unless-stopped
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/visa_breno
+      DB_USERNAME: breno
+      DB_PASSWORD: visa_breno_dev
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
 volumes:
   postgres_data:
