@@ -8,6 +8,7 @@ public record Transaction(
         long accountId,
         OperationType operation,
         BigDecimal amount,
+        BigDecimal balance,
         OffsetDateTime occurredAt
 ) {
 }

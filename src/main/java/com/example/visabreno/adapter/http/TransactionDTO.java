@@ -23,6 +23,7 @@ public final class TransactionDTO {
             @JsonProperty("account_id") long accountId,
             @JsonProperty("operation_type_id") int operationTypeId,
             BigDecimal amount,
+            BigDecimal balance,
             @JsonProperty("occurred_at") Instant occurredAt
     ) {
         public static TransactionResponse from(Transaction transaction) {
@@ -31,6 +32,7 @@ public final class TransactionDTO {
                     transaction.accountId(),
                     transaction.operation().code(),
                     transaction.amount(),
+                    transaction.balance(),
                     transaction.occurredAt().toInstant()
             );
         }

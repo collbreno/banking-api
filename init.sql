@@ -11,6 +11,7 @@ CREATE TABLE transactions (
     operation_code SMALLINT NOT NULL,
     date_time TIMESTAMPTZ NOT NULL,
     amount NUMERIC(19, 2) NOT NULL,
+    balance NUMERIC(19,2) NOT NULL,
     account_id BIGINT NOT NULL
         REFERENCES accounts (id)
         ON DELETE CASCADE,
